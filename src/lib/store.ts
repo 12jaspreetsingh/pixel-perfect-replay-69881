@@ -1,5 +1,4 @@
 import { create } from "zustand";
-import { seedDecisions } from "./mock";
 import type { BenchmarkRow, SecurityDecision } from "./types";
 
 interface Toast { id: number; text: string; tone: "safe" | "danger" | "ml" | "accent" }
@@ -23,7 +22,7 @@ interface Store {
 
 let tid = 0;
 export const useStore = create<Store>((set, get) => ({
-  decisions: seedDecisions(18),
+  decisions: [],
   daemonOk: true,
   mlOk: true,
   mlPhase: "WARM",

@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { getHealth, getMLHealth, MOCK } from "@/lib/api";
-import { nextMockDecision } from "@/lib/mock";
+import { nextMockDecision, seedDecisions } from "@/lib/mock";
 import { useStore } from "@/lib/store";
 
 export function useConnectionStatus() {
@@ -24,6 +24,7 @@ export function useConnectionStatus() {
 export function useDecisionFeed() {
   useEffect(() => {
     if (!MOCK) return;
+    if (!useStore.getState().decisions.length) seedDecisions(18).reverse().forEach(useStore.getState().addDecision);
     const t = setInterval(() => {
       const d = nextMockDecision();
       useStore.getState().addDecision(d);

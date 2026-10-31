@@ -33,7 +33,7 @@ function Overview() {
   const now = useNow();
   const blocked = decisions.filter((d) => d.status === "BLOCKED");
   const spent = decisions.filter((d) => d.status === "APPROVED").reduce((s, d) => s + d.amount, 0);
-  const dist = REASONS.map((r, i) => ({ name: r, value: BASE[i] + decisions.filter((d) => d.reason === r).length }));
+  const dist = REASONS.map((r, i) => ({ name: r, value: (BASE[i] ?? 0) + decisions.filter((d) => d.reason === r).length }));
 
   return (
     <>

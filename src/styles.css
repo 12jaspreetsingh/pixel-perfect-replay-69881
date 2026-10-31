@@ -92,3 +92,61 @@
 @utility animate-slide-in { animation: slide-in 200ms ease-in both; }
 @utility animate-flash-red { animation: flash-red 150ms ease-out; }
 @utility animate-tier { animation: tier-bounce 1s ease-in-out infinite; }
+
+/* --- cyberpunk depth --- */
+@keyframes grid-drift { from { background-position: 0 0 } to { background-position: 0 -40px } }
+@utility cyber-grid {
+  position: relative;
+  isolation: isolate;
+  &::before {
+    content: "";
+    position: fixed;
+    inset: 3.5rem 0 0 220px;
+    z-index: -1;
+    pointer-events: none;
+    opacity: 0.08;
+    background-image:
+      linear-gradient(var(--border) 1px, transparent 1px),
+      linear-gradient(90deg, var(--border) 1px, transparent 1px);
+    background-size: 40px 40px;
+    animation: grid-drift 30s linear infinite;
+    filter: brightness(2.2);
+  }
+}
+@utility neon-text { text-shadow: 0 0 14px color-mix(in oklab, var(--accent) 70%, transparent); }
+@utility danger-stripes {
+  background-image: repeating-linear-gradient(45deg, color-mix(in oklab, var(--danger) 4%, transparent) 0 10px, transparent 10px 20px);
+}
+@keyframes red-glow { 0%,100% { box-shadow: 0 0 10px color-mix(in oklab, var(--danger) 25%, transparent) } 50% { box-shadow: 0 0 34px color-mix(in oklab, var(--danger) 55%, transparent) } }
+@utility glow-danger { animation: red-glow 1.4s ease-in-out infinite; }
+@utility glow-safe { box-shadow: 0 0 26px color-mix(in oklab, var(--safe) 22%, transparent); }
+@keyframes type-reveal { from { width: 0 } }
+@utility typewriter {
+  display: inline-block;
+  vertical-align: bottom;
+  overflow: hidden;
+  white-space: nowrap;
+  width: calc(var(--n) * 1ch);
+  animation: type-reveal calc(var(--n) * 30ms) steps(var(--n), end) both;
+}
+@keyframes ring-out { from { transform: scale(1); opacity: .8 } to { transform: scale(1.5); opacity: 0 } }
+@utility live-ring {
+  position: absolute;
+  inset: -3px;
+  border-radius: 9999px;
+  border: 1px solid var(--safe);
+  animation: ring-out 1.5s ease-out infinite;
+}
+@utility nav-streak {
+  position: relative;
+  &::before {
+    content: "";
+    position: absolute;
+    left: -2px;
+    top: 20%;
+    height: 60%;
+    width: 2px;
+    background: linear-gradient(to bottom, transparent, var(--accent), transparent);
+    box-shadow: 0 0 8px var(--accent);
+  }
+}

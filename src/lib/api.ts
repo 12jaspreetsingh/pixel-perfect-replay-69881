@@ -2,9 +2,9 @@ import { POLICY, seedDecisions } from "./mock";
 import type { Policy, SecurityDecision } from "./types";
 
 // Mock mode is on unless VITE_MOCK_API is explicitly "false".
-export const MOCK = import.meta.env.VITE_MOCK_API !== "false";
-const DAEMON = import.meta.env.VITE_DAEMON_URL ?? "http://localhost:4032";
-const ML = import.meta.env.VITE_ML_URL ?? "http://localhost:4033";
+export const MOCK = import.meta.env["VITE_MOCK_API"] !== "false";
+const DAEMON = import.meta.env["VITE_DAEMON_URL"] ?? "http://localhost:4032";
+const ML = import.meta.env["VITE_ML_URL"] ?? "http://localhost:4033";
 
 const delay = <T,>(v: T) => new Promise<T>((r) => setTimeout(() => r(v), 200 + Math.random() * 200));
 

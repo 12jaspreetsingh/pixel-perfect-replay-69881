@@ -49,7 +49,7 @@ const hex = (n: number) => Array.from({ length: n }, () => "0123456789abcdef"[Ma
 let i = 0;
 
 export function nextMockDecision(ts = Date.now()): SecurityDecision {
-  const base = CYCLE[i++ % CYCLE.length];
+  const base = CYCLE[i++ % CYCLE.length]!;
   const expected = "0x402" + hex(33) + "abc1";
   return {
     id: hex(12),

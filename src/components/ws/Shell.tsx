@@ -4,7 +4,7 @@ import { useEffect, useState, type ReactNode } from "react";
 import { Activity, Brain, Copy, LayoutDashboard, ScrollText, Settings, Shield, ShieldCheck, Swords, X } from "lucide-react";
 import { useStore } from "@/lib/store";
 import { useConnectionStatus, useDecisionFeed } from "@/hooks/use-live";
-import { Chip, Dot } from "./ui";
+import { Addr, Chip, Dot } from "./ui";
 
 const WALLET = "0x402f9c1e7a3b5d2e8c4a6f0d1b9e3c7aa1b2";
 const NAV = [
@@ -27,7 +27,7 @@ export function Shell({ children }: { children: ReactNode }) {
       <header className="fixed inset-x-0 top-0 z-30 flex h-14 items-center justify-between border-b bg-panel px-4">
         <div className="flex items-center gap-2.5">
           <ShieldCheck className="h-6 w-6 text-accent" />
-          <span className="font-bold tracking-tight">WalletShield</span>
+          <span className="neon-text font-bold tracking-tight">WalletShield</span>
           <span className="hidden text-xs text-muted-foreground md:inline">Zero Trust AI Payment Firewall</span>
         </div>
         <button
@@ -35,16 +35,16 @@ export function Shell({ children }: { children: ReactNode }) {
           className="flex items-center gap-2 rounded border bg-card px-3 py-1 font-mono text-xs hover:border-accent/50"
           title="Copy wallet address"
         >
-          {copied ? "copied!" : "0x402...a1b2"} <Copy className="h-3 w-3 text-muted-foreground" />
+          {copied ? "copied!" : <Addr text="0x402...a1b2" />} <Copy className="h-3 w-3 text-muted-foreground" />
         </button>
         <div className="flex items-center gap-2">
-          <Chip tone="safe" className="animate-blink"><Dot tone="safe" pulse={false} />LIVE</Chip>
+          <Chip tone="safe" className="px-2"><span className="relative inline-flex h-2 w-2"><span className="live-ring" /><span className="h-2 w-2 rounded-full bg-safe" /></span><span className="animate-blink">LIVE</span></Chip>
           <Chip tone="accent">Base Sepolia</Chip>
           <Settings className="ml-1 h-4 w-4 text-muted-foreground" />
         </div>
       </header>
       <Sidebar />
-      <main className="pl-[220px] pt-14">
+      <main className="cyber-grid pl-[220px] pt-14">
         <div className="mx-auto max-w-[1400px] p-6">{children}</div>
       </main>
       <Toasts />
@@ -65,7 +65,7 @@ function Sidebar() {
         {NAV.map(({ to, label, icon: Icon }) => {
           const active = path === to;
           return (
-            <Link key={to} to={to} className={clsx("flex items-center gap-3 rounded border-l-2 px-3 py-2 text-sm transition", active ? "border-accent bg-accent/10 text-accent" : "border-transparent text-muted-foreground hover:bg-card hover:text-foreground")}>
+            <Link key={to} to={to} className={clsx("flex items-center gap-3 rounded border-l-2 px-3 py-2 text-sm transition", active ? "nav-streak border-accent bg-accent/10 text-accent" : "border-transparent text-muted-foreground hover:bg-card hover:text-foreground")}>
               <Icon className="h-4 w-4" />{label}
             </Link>
           );

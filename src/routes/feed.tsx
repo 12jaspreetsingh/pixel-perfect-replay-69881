@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { X } from "lucide-react";
 import { useStore } from "@/lib/store";
 import { useNow } from "@/hooks/use-live";
-import { Btn, Chip, Dot, MLChip, PageTitle, ago, short } from "@/components/ws/ui";
+import { Addr, Btn, Chip, Dot, MLChip, PageTitle, ago, short } from "@/components/ws/ui";
 import type { SecurityDecision } from "@/lib/types";
 
 export const Route = createFileRoute("/feed")({
@@ -60,7 +60,7 @@ function FeedCard({ d, now }: { d: SecurityDecision; now: number }) {
   const tone = d.status === "APPROVED" ? "safe" : d.status === "BLOCKED" ? "danger" : "warn";
   const border = { safe: "border-l-safe", danger: "border-l-danger", warn: "border-l-warn" }[tone];
   return (
-    <article className={clsx("card-cyber animate-slide-in border-l-[3px] p-3", border, d.status === "BLOCKED" && "animate-flash-red")}>
+    <article className={clsx("card-cyber animate-slide-in border-l-[3px] p-3", border, d.status === "BLOCKED" && "danger-stripes animate-flash-red")}>
       <div className="flex flex-wrap items-center gap-2 font-mono text-xs">
         <Chip tone={tone}>{blocked ? <X className="h-3 w-3" /> : <Dot tone="safe" />}{d.status}</Chip>
         {d.reason ? <Chip tone={tone}>{d.reason}</Chip> : <span>merchant: {d.merchant}</span>}
@@ -72,14 +72,14 @@ function FeedCard({ d, now }: { d: SecurityDecision; now: number }) {
         {blocked ? (
           <>
             <div>Merchant: <span className="text-foreground">{d.merchant}</span></div>
-            <div>Expected payTo: <span className="text-foreground">{short(d.expected_pay_to)}</span></div>
-            <div>Received payTo: <span className={d.received_pay_to !== d.expected_pay_to ? "text-danger" : "text-foreground"}>{short(d.received_pay_to, 6)}</span></div>
+            <div>Expected payTo: <Addr className="text-foreground" text={short(d.expected_pay_to)} /></div>
+            <div>Received payTo: <Addr className={d.received_pay_to !== d.expected_pay_to ? "text-danger" : "text-foreground"} text={short(d.received_pay_to, 6)} /></div>
             <div>Firewall step: <span className="text-foreground">{d.firewall_step}</span></div>
           </>
         ) : (
           <>
-            <div>IntentToken: <span className="text-foreground">{short(d.intent_token, 10, 6)}</span></div>
-            <div>Recipient: <span className="text-foreground">{short(d.received_pay_to)}</span></div>
+            <div>IntentToken: <Addr className="text-foreground" text={short(d.intent_token, 10, 6)} /></div>
+            <div>Recipient: <Addr className="text-foreground" text={short(d.received_pay_to)} /></div>
           </>
         )}
         <div><MLChip score={d.ml_score} /></div>

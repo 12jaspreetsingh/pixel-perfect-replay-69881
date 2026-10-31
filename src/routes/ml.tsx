@@ -92,7 +92,7 @@ function Gauge({ score }: { score: number }) {
   const tone = scoreTone(score);
   const color = { safe: "text-safe", warn: "text-warn", danger: "text-danger" }[tone];
   return (
-    <div className="flex flex-col items-center">
+    <div className={`flex flex-col items-center rounded-lg p-4 transition-shadow ${score > 0.85 ? "glow-danger" : score < 0.6 ? "glow-safe" : ""}`}>
       <svg viewBox="0 0 280 150" className="w-full max-w-sm">
         <defs>
           <linearGradient id="g" x1="0" x2="1">

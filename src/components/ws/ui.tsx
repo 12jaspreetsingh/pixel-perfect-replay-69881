@@ -4,6 +4,14 @@ import { Check, X, AlertTriangle } from "lucide-react";
 import type { DecisionStatus, SecurityDecision } from "@/lib/types";
 import { useCountUp } from "@/hooks/use-live";
 
+export function Addr({ text, className }: { text: string; className?: string }) {
+  return (
+    <span className={clsx("typewriter font-mono", className)} style={{ "--n": text.length } as React.CSSProperties} title={text}>
+      {text}
+    </span>
+  );
+}
+
 export const short = (a: string, h = 5, t = 4) => (a.length > h + t ? `${a.slice(0, h)}...${a.slice(-t)}` : a);
 export const ago = (ts: number, now = Date.now()) => {
   const s = Math.max(0, Math.round((now - ts) / 1000));

@@ -4,7 +4,7 @@ import { Fragment, useState } from "react";
 import { Download, Search } from "lucide-react";
 import { getLedger } from "@/lib/api";
 import { useStore } from "@/lib/store";
-import { Btn, Card, Json, MLChip, PageTitle, StatusChip, short } from "@/components/ws/ui";
+import { Addr, Btn, Card, Json, MLChip, PageTitle, StatusChip, short } from "@/components/ws/ui";
 
 const ledgerQuery = queryOptions({ queryKey: ["ledger"], queryFn: getLedger });
 const PAGE = 12;
@@ -61,7 +61,7 @@ function Audit() {
                 <tr onClick={() => setOpen(open === d.id ? null : d.id)} className="cursor-pointer border-b hover:bg-panel">
                   <td className="py-2" suppressHydrationWarning>{new Date(d.timestamp).toLocaleTimeString()}</td><td>{d.merchant}</td><td>${d.amount.toFixed(3)}</td>
                   <td><StatusChip status={d.status} /></td><td className="text-danger">{d.reason ?? ""}</td><td><MLChip score={d.ml_score} /></td>
-                  <td className="text-muted-foreground">{short(d.intent_token, 8, 4)}</td>
+                  <td><Addr className="text-muted-foreground" text={short(d.intent_token, 8, 4)} /></td>
                 </tr>
                 {open === d.id && <tr><td colSpan={7} className="py-2"><Json data={d} /></td></tr>}
               </Fragment>

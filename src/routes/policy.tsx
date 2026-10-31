@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
 import { Plus, Users, Wallet } from "lucide-react";
 import { getPolicy } from "@/lib/api";
-import { Btn, Card, Chip, PageTitle, short } from "@/components/ws/ui";
+import { Addr, Btn, Card, Chip, PageTitle, short } from "@/components/ws/ui";
 
 const policyQuery = queryOptions({ queryKey: ["policy"], queryFn: getPolicy });
 
@@ -48,7 +48,7 @@ function PolicyPage() {
           <tbody>
             {data.providers.map((p) => (
               <tr key={p.domain} className="border-b last:border-0">
-                <td className="py-3">{p.domain}</td><td>{short(p.wallet, 6)}</td><td>{p.network}</td><td>{p.token}</td><td>${p.max}</td>
+                <td className="py-3">{p.domain}</td><td><Addr text={short(p.wallet, 6)} /></td><td>{p.network}</td><td>{p.token}</td><td>${p.max}</td>
                 <td className="text-right"><Chip tone="safe">TRUSTED</Chip></td>
               </tr>
             ))}

@@ -45,7 +45,7 @@ export function tierFor(caught: number) {
 
 function Lab() {
   const { mlPhase, benchmark, setBenchmark, setHot, toast } = useStore();
-  const [sel, setSel] = useState(ATTACKS[0].id);
+  const [sel, setSel] = useState(ATTACKS[0]!.id);
   const [firing, setFiring] = useState(false);
   const [log, setLog] = useState<string[]>([]);
   const [running, setRunning] = useState(false);
@@ -67,9 +67,9 @@ function Lab() {
     setLog([]);
     const rows: BenchmarkRow[] = [];
     for (let i = 0; i < ATTACKS.length; i++) {
-      setLog((l) => [...l, `$ fire ${ATTACKS[i].id}`]);
+      setLog((l) => [...l, `$ fire ${ATTACKS[i]!.id}`]);
       await sleep(350);
-      const r = simulate(ATTACKS[i].id, hot);
+      const r = simulate(ATTACKS[i]!.id, hot);
       rows.push(r);
       setBenchmark([...rows]);
       setLog((l) => [...l, `  ${r.result === "BLOCKED" ? "✓ BLOCKED" : "✗ PASSED"} ${r.reason} [${r.latency}ms]`]);

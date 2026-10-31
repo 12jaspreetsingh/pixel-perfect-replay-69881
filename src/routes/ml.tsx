@@ -26,7 +26,7 @@ function MLGuard() {
   const hot = mlPhase === "HOT";
   const current = decisions[0]?.ml_score ?? 0;
   const timeline = decisions.slice(0, 20).reverse().map((d, i) => ({ i: i + 1, score: +d.ml_score.toFixed(2) }));
-  const feats = FEATURES.map((f, i) => ({ ...f, w: FEATURE_WEIGHTS[i] })).sort((a, b) => b.w - a.w);
+  const feats = FEATURES.map((f, i) => ({ ...f, w: FEATURE_WEIGHTS[i] ?? 0 })).sort((a, b) => b.w - a.w);
 
   return (
     <>
@@ -54,7 +54,7 @@ function MLGuard() {
                 <BarChart data={feats} layout="vertical" margin={{ left: 40 }}>
                   <XAxis type="number" hide />
                   <YAxis type="category" dataKey="name" width={150} tick={{ fill: "var(--muted)", fontSize: 10, fontFamily: "IBM Plex Mono" }} axisLine={false} tickLine={false} />
-                  <Tooltip cursor={{ fill: "var(--panel)" }} contentStyle={tip} itemStyle={{ color: "var(--foreground)" }} formatter={(v: number, _n, p) => [`${v} — ${p.payload.info}`, "weight"]} />
+                  <Tooltip cursor={{ fill: "var(--panel)" }} contentStyle={tip} itemStyle={{ color: "var(--foreground)" }} formatter={(v, _n, p) => [`${v} — ${(p as { payload?: { info?: string } }).payload?.info ?? ""}`, "weight"]} />
                   <Bar dataKey="w" radius={[0, 3, 3, 0]}>
                     {feats.map((f) => <Cell key={f.name} fill={f.w > 0.15 ? "var(--accent)" : f.w > 0.08 ? "var(--ml)" : "var(--muted)"} />)}
                   </Bar>

@@ -64,7 +64,7 @@ function Overview() {
             <ResponsiveContainer>
               <PieChart>
                 <Pie data={dist} dataKey="value" innerRadius={62} outerRadius={92} paddingAngle={2} stroke="var(--card)">
-                  {dist.map((_, i) => <Cell key={i} fill={SHADES[i]} />)}
+                  {dist.map((_, i) => <Cell key={i} fill={SHADES[i] ?? "var(--danger)"} />)}
                 </Pie>
                 <Tooltip contentStyle={{ background: "var(--card)", border: "1px solid var(--border)", fontFamily: "IBM Plex Mono", fontSize: 11 }} itemStyle={{ color: "var(--foreground)" }} />
               </PieChart>

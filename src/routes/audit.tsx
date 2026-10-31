@@ -59,7 +59,7 @@ function Audit() {
             {rows.map((d) => (
               <Fragment key={d.id}>
                 <tr onClick={() => setOpen(open === d.id ? null : d.id)} className="cursor-pointer border-b hover:bg-panel">
-                  <td className="py-2">{new Date(d.timestamp).toLocaleTimeString()}</td><td>{d.merchant}</td><td>${d.amount.toFixed(3)}</td>
+                  <td className="py-2" suppressHydrationWarning>{new Date(d.timestamp).toLocaleTimeString()}</td><td>{d.merchant}</td><td>${d.amount.toFixed(3)}</td>
                   <td><StatusChip status={d.status} /></td><td className="text-danger">{d.reason ?? ""}</td><td><MLChip score={d.ml_score} /></td>
                   <td className="text-muted-foreground">{short(d.intent_token, 8, 4)}</td>
                 </tr>

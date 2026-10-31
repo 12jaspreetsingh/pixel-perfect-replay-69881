@@ -1,9 +1,9 @@
 import { Link, useRouterState } from "@tanstack/react-router";
 import clsx from "clsx";
-import { useState, type ReactNode } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import { Activity, Brain, Copy, LayoutDashboard, ScrollText, Settings, Shield, ShieldCheck, Swords, X } from "lucide-react";
 import { useStore } from "@/lib/store";
-import { useConnectionStatus, useDecisionFeed, useNow } from "@/hooks/use-live";
+import { useConnectionStatus, useDecisionFeed } from "@/hooks/use-live";
 import { Chip, Dot } from "./ui";
 
 const WALLET = "0x402f9c1e7a3b5d2e8c4a6f0d1b9e3c7aa1b2";
@@ -16,7 +16,7 @@ const NAV = [
   { to: "/audit", label: "Audit Log", icon: ScrollText },
 ] as const;
 
-const BOOT = Date.now() - (4 * 3600 + 32 * 60 + 17) * 1000;
+const BOOT_S = 4 * 3600 + 32 * 60 + 17;
 
 export function Shell({ children }: { children: ReactNode }) {
   useConnectionStatus();
@@ -55,8 +55,9 @@ export function Shell({ children }: { children: ReactNode }) {
 function Sidebar() {
   const path = useRouterState({ select: (r) => r.location.pathname });
   const { daemonOk, mlOk } = useStore();
-  const now = useNow();
-  const up = Math.floor((now - BOOT) / 1000);
+  const [tick, setTick] = useState(0);
+  useEffect(() => { const t = setInterval(() => setTick((n) => n + 1), 1000); return () => clearInterval(t); }, []);
+  const up = BOOT_S + tick;
   const fmt = [Math.floor(up / 3600), Math.floor(up / 60) % 60, up % 60].map((n) => String(n).padStart(2, "0")).join(":");
   return (
     <aside className="fixed bottom-0 left-0 top-14 z-20 flex w-[220px] flex-col border-r bg-panel">
